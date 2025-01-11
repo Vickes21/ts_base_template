@@ -875,7 +875,7 @@ app.ready().then(() => {
     });
   });
 });
-app.listen({ port: 3001 }, async function(err, address) {
+app.listen({ port: 3001, host: "0.0.0.0" }, async function(err, address) {
   if (err) {
     app.log.error(err);
     await promises.awaitAllCallbacks();
