@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ES2020",
+    "module": "ES2022", // or ES2020 if you don't care about ESM (recommended)
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@yourapp/shared": [
+        "libs/shared"
+      ],
+    },
+  }
+}
