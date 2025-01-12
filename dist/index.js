@@ -852,9 +852,13 @@ app.ready().then(() => {
         stream: true,
         user: data.user,
         onNewMessage: (data2) => {
-          socket.emit("newMessage", {
-            id: data2.id
-          });
+          try {
+            socket.emit("newMessage", {
+              id: data2.id
+            });
+          } catch (error) {
+            console.log("error emiting", error);
+          }
         },
         onNewToken: (data2) => {
           socket.emit("token", {

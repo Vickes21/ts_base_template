@@ -40,9 +40,14 @@ app.ready().then(() => {
         stream: true,
         user: data.user,
         onNewMessage: (data) => {
-          socket.emit('newMessage', {
-            id: data.id,
-          });
+          try {
+            socket.emit('newMessage', {
+              id: data.id,
+            });
+
+          } catch (error) {
+            console.log('error emiting', error);
+          }
         },
         onNewToken: (data) => {
           socket.emit('token', {
