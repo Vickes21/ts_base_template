@@ -4,6 +4,7 @@ import fastifyIO from "fastify-socket.io";
 import { mainPipeline } from './graphs/main/main.pipeline';
 import { awaitAllCallbacks } from "@langchain/core/callbacks/promises";
 import cors from '@fastify/cors'
+import { log } from 'src/graphs/main/shared/utils';
 
 const fs = require('fs')
 const app = fastify({
@@ -33,34 +34,35 @@ app.ready().then(() => {
     });
 
     socket.on('message', async (data) => {
-      console.log('message: ', data);
-      await mainPipeline({
-        chatId: data.chatId,
-        message: data.message,
-        stream: true,
-        user: data.user,
-        onNewMessage: (data) => {
-          try {
+      try {
+        console.log('message: ', data);
+        await mainPipeline({
+          chatId: data.chatId,
+          message: data.message,
+          stream: true,
+          user: data.user,
+          onNewMessage: (data) => {
             socket.emit('newMessage', {
               id: data.id,
             });
-
-          } catch (error) {
-            console.log('error emiting', error);
+          },
+          onNewToken: (data) => {
+            socket.emit('token', {
+              message_id: data.messageId,
+              content: data.content,
+            });
+          },
+          onEndMessage: (data) => {
+            socket.emit('endMessage', {
+              id: data.id,
+            });
           }
-        },
-        onNewToken: (data) => {
-          socket.emit('token', {
-            message_id: data.messageId,
-            content: data.content,
-          });
-        },
-        onEndMessage: (data) => {
-          socket.emit('endMessage', {
-            id: data.id,
-          });
-        }
-      })
+        })
+
+      } catch (error) {
+        console.log('ERROR ON MAIN PIPELINE');
+        console.error(error);
+      }
     })
   });
 

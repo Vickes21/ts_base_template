@@ -845,33 +845,34 @@ app.ready().then(() => {
       console.log("user disconnected");
     });
     socket.on("message", async (data) => {
-      console.log("message: ", data);
-      await mainPipeline({
-        chatId: data.chatId,
-        message: data.message,
-        stream: true,
-        user: data.user,
-        onNewMessage: (data2) => {
-          try {
+      try {
+        console.log("message: ", data);
+        await mainPipeline({
+          chatId: data.chatId,
+          message: data.message,
+          stream: true,
+          user: data.user,
+          onNewMessage: (data2) => {
             socket.emit("newMessage", {
               id: data2.id
             });
-          } catch (error) {
-            console.log("error emiting", error);
+          },
+          onNewToken: (data2) => {
+            socket.emit("token", {
+              message_id: data2.messageId,
+              content: data2.content
+            });
+          },
+          onEndMessage: (data2) => {
+            socket.emit("endMessage", {
+              id: data2.id
+            });
           }
-        },
-        onNewToken: (data2) => {
-          socket.emit("token", {
-            message_id: data2.messageId,
-            content: data2.content
-          });
-        },
-        onEndMessage: (data2) => {
-          socket.emit("endMessage", {
-            id: data2.id
-          });
-        }
-      });
+        });
+      } catch (error) {
+        console.log("ERROR ON MAIN PIPELINE");
+        console.error(error);
+      }
     });
   });
   app.io.of("/conversation").on("connection", (socket) => {

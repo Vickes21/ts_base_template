@@ -17,7 +17,7 @@
     "@langchain/langgraph": "^0.2.36",
     "@langchain/openai": "^0.3.16",
     "axios": "^1.7.9",
-    "fastify": "^5.2.0",
+    "fastify": "^4.25.0",
     "fastify-socket.io": "^5.1.0",
     "langchain": "^0.3.8",
     "socket.io": "^4.8.1",
