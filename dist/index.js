@@ -828,8 +828,8 @@ const mainPipeline = async ({
 const fs = require$1("fs");
 const app = fastify({
   https: {
-    key: fs.readFileSync("/etc/letsencrypt/live/graph.xsales.agency/privkey.pem"),
-    cert: fs.readFileSync("/etc/letsencrypt/live/graph.xsales.agency/fullchain.pem")
+    key: fs.readFileSync("/home/vitor/certs/privkey.pem"),
+    cert: fs.readFileSync("/home/vitor/certs/fullchain.pem")
   },
   logger: true
 });
