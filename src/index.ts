@@ -5,8 +5,12 @@ import { mainPipeline } from './graphs/main/main.pipeline';
 import { awaitAllCallbacks } from "@langchain/core/callbacks/promises";
 import cors from '@fastify/cors'
 
-
+const fs = require('fs')
 const app = fastify({
+  https: {
+    key: fs.readFileSync('/etc/letsencrypt/live/graph.xsales.agency/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/graph.xsales.agency/fullchain.pem')
+  },
   logger: true
 })
 app.register(cors, {

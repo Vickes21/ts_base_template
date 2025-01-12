@@ -1,7 +1,7 @@
 'use strict';
 
-var fastify = require('fastify');
 var module$1 = require('module');
+var fastify = require('fastify');
 var langgraph = require('@langchain/langgraph');
 var messages = require('@langchain/core/messages');
 var prebuilt = require('@langchain/langgraph/prebuilt');
@@ -825,7 +825,12 @@ const mainPipeline = async ({
   }
 };
 
+const fs = require$1("fs");
 const app = fastify({
+  https: {
+    key: fs.readFileSync("/etc/letsencrypt/live/graph.xsales.agency/privkey.pem"),
+    cert: fs.readFileSync("/etc/letsencrypt/live/graph.xsales.agency/fullchain.pem")
+  },
   logger: true
 });
 app.register(cors, {
