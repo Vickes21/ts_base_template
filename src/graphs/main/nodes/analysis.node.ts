@@ -76,6 +76,7 @@ export const analysisNode = async (
     content: state.instructions,
     name: 'Supervisor'
   })
+  
   const lastDataFetcherMessage = state.messages.find((m) => m.name === "DataFetcherAgent")
   const response = await chain.invoke({
     // example: formatterExample,

@@ -22,11 +22,13 @@ export const supervisorNode = async (
   //   xpto: 'xpto'
   // });
 
-  const chain = (await prompt.partial({
-    user_name: config.configurable!.user.name,
-    user_email: config.configurable!.user.email,
-    apiEndpointsSpecs: JSON.stringify(apiEndpointsSpecs, null, 2),
-  })).pipe(gpt4oMiniLlm.bindTools(
+  const chain = (
+    await prompt.partial({
+      user_name: config.configurable!.user.name,
+      user_email: config.configurable!.user.email,
+      apiEndpointsSpecs: JSON.stringify(apiEndpointsSpecs, null, 2),
+    })
+  ).pipe(gpt4oMiniLlm.bindTools(
     [routingTool],
     {
       tool_choice: "route",

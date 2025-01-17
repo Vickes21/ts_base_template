@@ -44,3 +44,4 @@ export const getSummaryReport = tool(async ({ filters }, config) => {
     }).describe("Filtro de busca."),
   }),
 })
+
