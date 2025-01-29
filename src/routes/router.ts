@@ -1,11 +1,11 @@
 import { FastifyInstance, FastifyPluginOptions } from "fastify"
-import { chatTitlePipeline } from "src/graphs/chat-title/chat-title.pipeline";
-import { setChatTitleApiParamsSchema } from "src/schemas/api";
+import { examplePipeline } from "src/graphs/example/example.pipeline";
+import { helloWordApiParamsSchema } from "src/schemas/api";
 
 export const router = (fastify: FastifyInstance, opts: FastifyPluginOptions, done: () => void) => {
-  fastify.post('/set-chat-title', async (request, reply) => {
+  fastify.post('/hello-world', async (request, reply) => {
 
-    const parsed = setChatTitleApiParamsSchema.safeParse(request.body);
+    const parsed = helloWordApiParamsSchema.safeParse(request.body);
 
     if (!parsed.success) {
       return reply
@@ -15,11 +15,13 @@ export const router = (fastify: FastifyInstance, opts: FastifyPluginOptions, don
 
     const data = parsed.data;
 
-    const title = await chatTitlePipeline({
-      chatId: data.chatId
+    const exampleResponse = await examplePipeline({
+      example: data.example
     })
 
-    return reply.send({ title });
+    return reply.send({
+      response: exampleResponse
+    });
   })
 
 

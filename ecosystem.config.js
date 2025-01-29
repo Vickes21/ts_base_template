@@ -1,6 +1,6 @@
 module.exports = {
   apps: [{
-    name: 'graph_api',
+    name: 'example-graph-api',
     script: './dist/index.js',
     instances: 1,
     exec_mode: 'cluster',

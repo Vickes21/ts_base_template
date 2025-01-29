@@ -2,32 +2,30 @@ import { HumanMessage } from "@langchain/core/messages";
 import { JsonOutputParser } from "@langchain/core/output_parsers";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { RunnableConfig } from "@langchain/core/runnables";
-import { MessagesAnnotation } from "@langchain/langgraph";
-import { createAgentExecutor, createReactAgent } from "@langchain/langgraph/prebuilt";
+import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { pull } from "langchain/hub";
-import { ChatTitleState } from "src/graphs/chat-title/chat-title.state";
-import { setChatTitleTool } from "src/graphs/chat-title/tools/set-chat-title.tool";
-import { gpt4oMiniLlm } from "src/graphs/main/shared/models";
+import { ExampleState } from "src/graphs/example/example.state";
+import { exampleTool } from "src/graphs/example/tools/example.tool";
+import { gpt4oMiniLlm } from "src/lib/models";
 
-export const nameChatNode = async (
-  state: typeof ChatTitleState.State,
+export const exampleNode = async (
+  state: typeof ExampleState.State,
   config?: RunnableConfig
 ) => {
-  console.log("nameChatNode", "- init name chat node");
 
-  const prompt = await pull<ChatPromptTemplate>("xsales-chat-title");
+  const prompt = await pull<ChatPromptTemplate>("example-prompt");
 
   const agent = createReactAgent({
     llm: gpt4oMiniLlm,
     tools: [
-      setChatTitleTool
+      exampleTool
     ],
-    stateSchema: ChatTitleState,
+    stateSchema: ExampleState,
     stateModifier: await prompt.partial({})
   })
 
   const humanMessage = new HumanMessage({
-    content: `Conversas do Chat: ${state.chatHistory}`
+    content: `Exemplo: ${state.example}`
   })
 
   const result = await agent.invoke({
@@ -39,7 +37,9 @@ export const nameChatNode = async (
   const lastMessage = result.messages[result.messages.length - 1]
 
   return {
-    chatTitle: result.chatTitle,
+    //É possivel atualizar o estado do node
+    example: `Novo valor a ser atualizado: ${result.example}`,
+    //merge de mensagens
     messages: [
       lastMessage
     ]

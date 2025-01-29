@@ -1,17 +1,13 @@
 import { BaseMessage } from "@langchain/core/messages";
 import { Annotation, messagesStateReducer } from "@langchain/langgraph";
 
-export const ChatTitleState = Annotation.Root({
+export const ExampleState = Annotation.Root({
   messages: Annotation<BaseMessage[]>({
     reducer: messagesStateReducer,
     default: () => [],
   }),
-  chatHistory: Annotation<string>({
+  example: Annotation<string>({
     reducer: (x, y) => y ?? x ?? "",
     default: () => "",
   }),
-  chatTitle: Annotation<string>({
-    reducer: (x, y) => y ?? x ?? "",
-    default: () => "",
-  })
 })
