@@ -1,6 +1,6 @@
 module.exports = {
   apps: [{
-    name: 'example-graph-api',
+    name: 'ts_base_template',
     script: './dist/index.js',
     instances: 1,
     exec_mode: 'cluster',

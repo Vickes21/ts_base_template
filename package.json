@@ -1,5 +1,5 @@
 {
-  "name": "graph_api",
+  "name": "ts_base_template",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -10,19 +10,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@fastify/cors": "^10.0.2",
-    "@langchain/community": "^0.3.20",
-    "@langchain/core": "^0.3.26",
-    "@langchain/langgraph": "^0.2.36",
-    "@langchain/openai": "^0.3.16",
-    "axios": "^1.7.9",
-    "fastify": "^4.25.0",
-    "langchain": "^0.3.8",
-    "zod": "^3.24.1"
-  },
   "devDependencies": {
     "@types/node": "^22.10.2",
-    "pkgroll": "^2.6.0"
+    "pkgroll": "^2.11.2",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
   }
 }
