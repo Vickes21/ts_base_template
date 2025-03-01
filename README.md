@@ -1,4 +1,7 @@
-## Development
+# Simplest Typescript template for local development
+*Made for personal use (or not)*
+
+### Development
 - Source files are in ```/src```
 - Run ```pnpm dev```
 
